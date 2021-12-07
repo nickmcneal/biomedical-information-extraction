@@ -1,4 +1,4 @@
-!pip install openai
+# !pip install openai
 import openai
 import random
 import os
