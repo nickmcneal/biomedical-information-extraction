@@ -1,15 +1,20 @@
-# !pip install openai
+!pip install openai
 import openai
+
 import random
 import os
 import pandas as pd
 import numpy as np
 import pickle as pkl
 
-#connect to API using your API Key:
+#connect to API with your info
 openai.api_key=" "
 
-input_filename = "input.txt" # loads this file
+#in create:
+  #presence penalty
+  #logit bias
+  #https://beta.openai.com/docs/api-reference/completions/create
+input_filename = "development_examples.txt" # loads this file
 output_filename = "output.txt" # creates this file
 output_map_filename = "output_maps.pkl"
 
@@ -19,6 +24,7 @@ input = input[0].str.split('\s\|\s', expand=True)
 sentences = []
 tags = []
 sentence_maps = []
+sentence_maps_space = []
 
 # convert to np array for processing
 input = np.asarray(input)
@@ -27,16 +33,28 @@ input = np.asarray(input)
 for idx, line in enumerate(input):
   if idx % 2 == 0:
     sentence = input[idx][0].lower()
+    sentence_space = input[idx][0].lower()
     sentences.append(sentence)
 
     sentence_map = dict()
+    sentence_map_space = dict()
     sentence = sentence.split(' ')
+    sentence_space = sentence_space.split(' ')
+    for word in sentence_space:
+      word = " " + word
+    for word in sentence_space:
+      if word in sentence_map_space:
+        sentence_map_space[word] += 1
+      else:
+        sentence_map_space[word] = 1
+    
     for word in sentence:
       if word in sentence_map:
         sentence_map[word] += 1
       else:
         sentence_map[word] = 1
     sentence_maps.append(sentence_map)
+    sentence_maps_space.append(sentence_map_space)
   else:
     tags.append(input[idx][0])
 
@@ -83,7 +101,6 @@ for line in range(len(sentences_tmp)):
   drugs = "Drugs: " + ", ".join(str(x).lower() for x in drugs_current_line)
   output.append(drugs)
   print(drugs_current_line)
-  
   #create and save dictionary of drug names
   drugs_map = dict()
   for drug in drugs_current_line:
