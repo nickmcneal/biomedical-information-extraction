@@ -12,7 +12,6 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 import spacy
 import scipy
 
-nlp = spacy.load("en_core_web_sm")
 openai.api_key= os.environ['OPENAI_KEY']
 
 def run_gpt3(engine, prompt, logit_bias_text, max_tokens=10, sep=None, logit_bias=0.1):
@@ -106,11 +105,60 @@ def run_gpt3_ner_post_filtering(engine,
 
     return entity_probs
 
+def run_gpt3_post_filtering_only(engine, 
+                                 filter_template,
+                                 prompts,
+                                 test_entities):
+    """
+    engine: ada, davinci, etc.
+    filter_template: string template with two '{}' slots, one for the entity and the other for the label 
+    prompts: List where each element should be a list of tuples of the form (entity, label) which will be used to make the prompts for each entity to classify. 
+    """
+    
+    logit_biases = {}
+    tokens = ['Yes','No']
+    
+    for token in tokens:
+        token_id = tokenizer.encode(token)[0]
+        logit_biases[token_id] = 10
+    
+    #Adding bias for newline (token id 198)
+    logit_biases[198] = -10 
+
+    entity_probs = {}
+    
+    for prompt_entities_labels, entity in zip(prompts,test_entities):
+        
+        filtering_prompt = []
+        
+        prompt_entity,label,score = prompt_entities_labels
+        filtering_prompt.append(filter_template.format(entity,label))
+        
+        filtering_prompt = '\n\n'.join(filtering_prompt)    
+        
+        filter_prompt = filtering_prompt + filter_template.format(entity,'')
+        ipdb.set_trace()
+        filter_sample = openai.Completion.create(engine=engine,
+                                          prompt=filter_prompt,
+                                          max_tokens=1,
+                                          temperature=0.0,
+                                          logprobs=2,
+                                          logit_bias = logit_biases,
+                                          stop=["\n", "<|endoftext|>"])
+        filter_dict = dict(filter_sample['choices'][0]['logprobs']['top_logprobs'][0])
+        
+        entity_logits = []
+        for opt in ['No','Yes']:
+            entity_logits.append(filter_dict[opt])
+        
+        entity_probs[entity] = scipy.special.softmax(entity_logits)
+
+    return entity_probs, filter_prompt, filter_sample
 
 def run_gpt3_on_df_post_filtering(engine, 
                           test_ready_prompt_dataframe, 
                           prompts,
-                          filtering_prompt,
+                          filter_prompt,
                           filter_template,
                           max_tokens=10, 
                           sep=None, 
@@ -139,9 +187,9 @@ def run_gpt3_on_df_post_filtering(engine,
         prediction = sample['choices'][0]['text']
         #Lowercasing all predictions
         prediction = prediction.lower().strip()
-        entities = prediction.split(sep)
+        entities = prediction.split(sep.strip())
 
-        entity_probs = run_gpt3_ner_post_filtering(engine, filter_prompt, template_prompt, entities)
+        entity_probs = run_gpt3_ner_post_filtering(engine, filter_prompt, filter_template, entities)
 
         filtered_entities = []
         for entity in entities:
@@ -192,7 +240,7 @@ def run_gpt3_on_df(engine,
         predictions.append(prediction)
 
     df = test_ready_prompt_dataframe
-    df["predictions"] = [p.split(sep) for p in predictions]
+    df["predictions"] = [p.split(sep.strip()) for p in predictions]
     df['gpt3_output_{}'.format("predictions")] = gpt3_output
     
     return df

@@ -1,0 +1,96 @@
+,seed,Avg Yes Prob for Positive Phrases,Avg Yes Prob for Negative Phrases,Prob Difference (Pos-Neg),Min Yes Prob in Pos Phrases,Max Yes Prob in Neg Phrases,0.5 F1,0.5 Prec,0.5 Recall,0.4 F1,0.4 Prec,0.4 Recall,0.4 Accuracy,Prompt,full_prompt,p,ranking_score
+0,42,0.4364301745171837,0.2854622823871798,0.1509678921300039,0.3584583116265183,0.3683754961918911,0.14285714285714288,1.0,0.07692307692307693,0.761904761904762,1.0,0.6153846153846154,0.8275862068965517,"['potassium' 'hoe 140' 'visual task' 'nausea'
+ 'partial loss of quadriceps functions' 'visual disturbance']","Does the phrase ""potassium"" refer to a disease?
+No
+
+Does the phrase ""hoe 140"" refer to a disease?
+No
+
+Does the phrase ""visual disturbance"" refer to a disease?
+Yes
+
+Does the phrase ""visual task"" refer to a disease?
+No
+
+Does the phrase ""partial loss of quadriceps functions"" refer to a disease?
+Yes
+
+Does the phrase ""nausea"" refer to a disease?
+Yes","['potassium' 'hoe 140' 'visual task' 'nausea'
+ 'partial loss of quadriceps functions' 'visual disturbance']",0.9128726540347658
+1,0,0.4659122556473086,0.26917283573016293,0.19673941991714566,0.3506428544250759,0.37871218135742973,0.47058823529411764,1.0,0.3076923076923077,0.9166666666666666,1.0,0.8461538461538461,0.9310344827586207,"['ergotamine / caffeine' 'mtdna damage' 'sumatriptan' 'meth mouth'
+ 'mitochondrial abnormalities' 'glioblastoma']","Does the phrase ""ergotamine / caffeine"" refer to a disease?
+No
+
+Does the phrase ""mtdna damage"" refer to a disease?
+No
+
+Does the phrase ""glioblastoma"" refer to a disease?
+Yes
+
+Does the phrase ""sumatriptan"" refer to a disease?
+No
+
+Does the phrase ""mitochondrial abnormalities"" refer to a disease?
+Yes
+
+Does the phrase ""meth mouth"" refer to a disease?
+Yes","['ergotamine / caffeine' 'mtdna damage' 'sumatriptan' 'meth mouth'
+ 'mitochondrial abnormalities' 'glioblastoma']",1.1134060865838122
+2,14,0.37452688831970904,0.20330316256484618,0.17122372575486286,0.24323427201542272,0.26324634030755456,0.0,0.0,0.0,0.631578947368421,1.0,0.46153846153846156,0.7586206896551724,"['dexamethasone' 'blood pressure' 'antihyperalgesic activity' 'phlebitis'
+ 'convulsions' 'petechiae']","Does the phrase ""dexamethasone"" refer to a disease?
+No
+
+Does the phrase ""blood pressure"" refer to a disease?
+No
+
+Does the phrase ""petechiae"" refer to a disease?
+Yes
+
+Does the phrase ""antihyperalgesic activity"" refer to a disease?
+No
+
+Does the phrase ""convulsions"" refer to a disease?
+Yes
+
+Does the phrase ""phlebitis"" refer to a disease?
+Yes","['dexamethasone' 'blood pressure' 'antihyperalgesic activity' 'phlebitis'
+ 'convulsions' 'petechiae']",0.8028026731232839
+3,21,0.4622158582978143,0.27268365689756857,0.18953220140024574,0.3156305001776709,0.40275635133462956,0.375,1.0,0.23076923076923078,0.8799999999999999,0.9166666666666666,0.8461538461538461,0.896551724137931,"['outcome' 'ergotamine / caffeine' 'antihyperalgesic activity'
+ 'myelopathy' 'convulsions' 'petechiae']","Does the phrase ""outcome"" refer to a disease?
+No
+
+Does the phrase ""ergotamine / caffeine"" refer to a disease?
+No
+
+Does the phrase ""petechiae"" refer to a disease?
+Yes
+
+Does the phrase ""antihyperalgesic activity"" refer to a disease?
+No
+
+Does the phrase ""convulsions"" refer to a disease?
+Yes
+
+Does the phrase ""myelopathy"" refer to a disease?
+Yes","['outcome' 'ergotamine / caffeine' 'antihyperalgesic activity'
+ 'myelopathy' 'convulsions' 'petechiae']",1.0695322014002455
+4,33,0.513520877170462,0.2463042167618003,0.2672166604086617,0.3900828014197369,0.3719079814750214,0.7000000000000001,1.0,0.5384615384615384,0.9166666666666666,1.0,0.8461538461538461,0.9310344827586207,"['potassium' 'mtdna damage' 'oxidative phosphorylation' 'nausea' 'purpura'
+ 'thrombosis']","Does the phrase ""potassium"" refer to a disease?
+No
+
+Does the phrase ""mtdna damage"" refer to a disease?
+No
+
+Does the phrase ""thrombosis"" refer to a disease?
+Yes
+
+Does the phrase ""oxidative phosphorylation"" refer to a disease?
+No
+
+Does the phrase ""purpura"" refer to a disease?
+Yes
+
+Does the phrase ""nausea"" refer to a disease?
+Yes","['potassium' 'mtdna damage' 'oxidative phosphorylation' 'nausea' 'purpura'
+ 'thrombosis']",1.1838833270753284
